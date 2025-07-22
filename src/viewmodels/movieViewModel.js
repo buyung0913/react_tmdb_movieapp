@@ -1,4 +1,4 @@
-import { sessionModel } from '../models/sessionModel'
+import { movieModel } from '../models/movieModel'
 import { makeAutoObservable, runInAction } from 'mobx'
 
 export class MovieViewModel {
@@ -32,9 +32,9 @@ export class MovieViewModel {
     try {
       let data
       if (this.searchQuery) {
-        data = await sessionModel.searchMovies(this.searchQuery, this.page, this.sessionId)
+        data = await movieModel.searchMovies(this.searchQuery, this.page, this.sessionId)
       } else {
-        data = await sessionModel.getMovieList(this.page, this.sessionId)
+        data = await movieModel.getMovieList(this.page, this.sessionId)
       }
 
       runInAction(() => {

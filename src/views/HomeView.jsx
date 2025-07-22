@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useAuthStore } from '../store/authStore'
-import { sessionModel } from '../models/sessionModel'
+import { movieModel } from '../models/movieModel'
 import { observer } from 'mobx-react-lite'
 import Navbar from '../components/Navbar'
 
@@ -18,8 +18,8 @@ const HomeView = observer(() => {
       setLoading(true)
       try {
         const data = searchMode && searchQuery
-          ? await sessionModel.searchMovies(searchQuery, page, sessionId)
-          : await sessionModel.getMovieList(page, sessionId)
+          ? await movieModel.searchMovies(searchQuery, page, sessionId)
+          : await movieModel.getMovieList(page, sessionId)
 
         setMovies(data.results || [])
         setTotalPages(data.total_pages || 1)
