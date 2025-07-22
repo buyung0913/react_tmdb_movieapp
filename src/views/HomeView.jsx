@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useAuthStore } from '../store/authStore'
 import { sessionModel } from '../models/sessionModel'
+import { observer } from 'mobx-react-lite'
 import Navbar from '../components/Navbar'
 
-const HomeView = () => {
-  const sessionId = useAuthStore(state => state.sessionId)
+const HomeView = observer(() => {
+  const sessionId = useAuthStore((state) => state.sessionId)
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(1)
@@ -16,7 +17,7 @@ const HomeView = () => {
     const fetchMovies = async () => {
       setLoading(true)
       try {
-        const data = searchQuery
+        const data = searchMode && searchQuery
           ? await sessionModel.searchMovies(searchQuery, page, sessionId)
           : await sessionModel.getMovieList(page, sessionId)
 
@@ -32,18 +33,22 @@ const HomeView = () => {
     if (sessionId) {
       fetchMovies()
     }
-  }, [sessionId, page, searchQuery])
+  }, [sessionId, page, searchMode])
 
   const handleSearch = (e) => {
     e.preventDefault()
-    setPage(1) // reset ke page 1
-    setSearchMode(true)
+    setPage(1)
+
+    if (searchQuery.trim() === '') {
+      setSearchMode(false) // kembali ke daftar semua film
+    } else {
+      setSearchMode(true) // cari berdasarkan query
+    }
   }
 
   const getPageNumbers = () => {
     const maxButtons = 5
     const pages = []
-
     const half = Math.floor(maxButtons / 2)
     let start = Math.max(1, page - half)
     let end = Math.min(totalPages, start + maxButtons - 1)
@@ -61,11 +66,12 @@ const HomeView = () => {
 
   return (
     <div style={{ padding: '2rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '23px' }}>
+        <Navbar />
+      </div>
+
+      {/* Search Form */}
       <form onSubmit={handleSearch} style={{ marginBottom: '1rem' }}>
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom:'10px' }}>
-          <Navbar />
-        </div>
-        
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <input
             type="text"
@@ -82,6 +88,7 @@ const HomeView = () => {
         </div>
       </form>
 
+      {/* Movie List */}
       {loading ? (
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <p>Loading movies...</p>
@@ -90,11 +97,9 @@ const HomeView = () => {
         <>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
             gap: '1.5rem',
-            justifyContent: 'center',
-            maxWidth: '720px', // 3 kartu x 240px termasuk gap
-            width: '100%',
+            maxWidth: '960px',
             margin: '0 auto'
           }}>
             {movies.map((movie) => (
@@ -118,45 +123,51 @@ const HomeView = () => {
           </div>
 
           {/* Pagination */}
-          <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
-          <button
-            disabled={page === 1}
-            onClick={() => setPage(prev => Math.max(1, prev - 1))}
-            style={{ padding: '0.5rem 1rem', cursor: 'pointer' }}
-          >
-            ← Prev
-          </button>
-
-          {getPageNumbers().map((pg) => (
+          <div style={{
+            marginTop: '2rem',
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '0.5rem',
+            flexWrap: 'wrap'
+          }}>
             <button
-              key={pg}
-              onClick={() => setPage(pg)}
-              style={{
-                padding: '0.5rem 0.75rem',
-                fontWeight: pg === page ? 'bold' : 'normal',
-                backgroundColor: pg === page ? '#01b4e4' : '#fff',
-                color: pg === page ? 'white' : 'black',
-                border: '1px solid #ccc',
-                borderRadius: '4px',
-                cursor: 'pointer'
-              }}
+              disabled={page === 1}
+              onClick={() => setPage(prev => Math.max(1, prev - 1))}
+              style={{ padding: '0.5rem 1rem', cursor: 'pointer' }}
             >
-              {pg}
+              ← Prev
             </button>
-          ))}
 
-          <button
-            disabled={page >= totalPages}
-            onClick={() => setPage(prev => prev + 1)}
-            style={{ padding: '0.5rem 1rem', cursor: 'pointer' }}
-          >
-            Next →
-          </button>
-        </div>
+            {getPageNumbers().map((pg) => (
+              <button
+                key={pg}
+                onClick={() => setPage(pg)}
+                style={{
+                  padding: '0.5rem 0.75rem',
+                  fontWeight: pg === page ? 'bold' : 'normal',
+                  backgroundColor: pg === page ? '#01b4e4' : '#fff',
+                  color: pg === page ? 'white' : 'black',
+                  border: '1px solid #ccc',
+                  borderRadius: '4px',
+                  cursor: 'pointer'
+                }}
+              >
+                {pg}
+              </button>
+            ))}
+
+            <button
+              disabled={page >= totalPages}
+              onClick={() => setPage(prev => prev + 1)}
+              style={{ padding: '0.5rem 1rem', cursor: 'pointer' }}
+            >
+              Next →
+            </button>
+          </div>
         </>
       )}
     </div>
   )
-}
+})
 
 export default HomeView

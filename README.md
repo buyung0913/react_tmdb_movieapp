@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🎬 TMDB Movie App (React)
 
 A simple movie browser app built with React, using The Movie Database (TMDB) API. Features include login via TMDB credentials, session-based authentication, movie list, search, pagination, and logout. Built with clean MVVM architecture and dependency injection.
@@ -108,3 +109,6 @@ npm run dev
 ## 📝 License
 
 MIT © [Indramawan, Buyung]
+=======
+# react_tmdb_movieapp
+>>>>>>> 61c425f9e5331c5251d9a797de3545c239dbad6b
