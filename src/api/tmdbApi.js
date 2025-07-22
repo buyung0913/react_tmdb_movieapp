@@ -9,7 +9,6 @@ const tmdbApi = axios.create({
   }
 })
 
-// Request Interceptor: Tambahkan log atau param tambahan jika perlu
 tmdbApi.interceptors.request.use(
   (config) => {
     const sessionId = localStorage.getItem('session_id')
@@ -31,7 +30,6 @@ tmdbApi.interceptors.request.use(
 // Response Interceptor: Tangani error global (401, 403, dll)
 tmdbApi.interceptors.response.use(
   (response) => {
-    // Optional: log respon
     return response
   },
   (error) => {

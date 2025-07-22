@@ -38,8 +38,7 @@ src/
 ├── api/               # Axios instance with interceptors
 ├── components/        # Reusable components (Navbar, etc)
 ├── di/                # Dependency injection container
-├── models/            # sessionModel: API call logic
-├── services/          # Service abstractions (if any)
+├── models/            # sessionModel, movieModel: API call logic
 ├── store/             # Zustand store (authStore)
 ├── viewmodels/        # loginVM: business logic
 ├── views/             # LoginView, HomeView
@@ -53,8 +52,8 @@ src/
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/your-username/react-tmdb-app.git
-cd react-tmdb-app
+git clone https://github.com/buyung0913/react_tmdb_movieapp.git
+cd react_tmdb_app
 ```
 
 ### 2. Install dependencies
@@ -94,7 +93,7 @@ npm run dev
 - All TMDB requests go through Axios instance in `src/api/tmdbApi.js`
 - Auth state is globally handled in `authStore.js`
 - DI via `useDI()` hook in components/views
-- Movie listing uses `sessionModel.getMovieList(...)`
+- Movie listing uses `movieModel.getMovieList(...)`
 
 ---
 
@@ -102,4 +101,3 @@ npm run dev
 
 MIT © [Indramawan, Buyung]
 =======
-# react_tmdb_movieapp
