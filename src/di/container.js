@@ -1,6 +1,6 @@
 import { sessionModel } from '../models/sessionModel'
-import { loginViewModel } from '../viewmodels/loginViewModel'
 import { useAuthStore } from '../store/authStore'
+import { loginViewModel } from '../viewmodels/loginViewModel'
 import { MovieViewModel } from '../viewmodels/movieViewModel'
 
 export const useDI = () => {

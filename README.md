@@ -89,14 +89,6 @@ npm run dev
 
 ---
 
-## 📸 UI Preview
-
-| Login Page | Movie List |
-|------------|------------|
-| ![Login](screenshots/login.png) | ![Movies](screenshots/movies.png) |
-
----
-
 ## 🧪 Development Tips
 
 - All TMDB requests go through Axios instance in `src/api/tmdbApi.js`
@@ -111,4 +103,3 @@ npm run dev
 MIT © [Indramawan, Buyung]
 =======
 # react_tmdb_movieapp
->>>>>>> 61c425f9e5331c5251d9a797de3545c239dbad6b
