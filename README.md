@@ -41,7 +41,7 @@ src/
 ├── models/            # sessionModel, movieModel: API call logic
 ├── routes/            # Route guard
 ├── store/             # Zustand store (authStore)
-├── viewmodels/        # loginVM: business logic
+├── viewmodels/        # loginVM, movieVM: business logic
 ├── views/             # LoginView, HomeView
 └── App.jsx            # Router & global layout
 ```
