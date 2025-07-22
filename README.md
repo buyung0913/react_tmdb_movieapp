@@ -39,6 +39,7 @@ src/
 ├── components/        # Reusable components (Navbar, etc)
 ├── di/                # Dependency injection container
 ├── models/            # sessionModel, movieModel: API call logic
+├── routes/            # Service abstractions (if any)
 ├── store/             # Zustand store (authStore)
 ├── viewmodels/        # loginVM: business logic
 ├── views/             # LoginView, HomeView
